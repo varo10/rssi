@@ -23,11 +23,16 @@
 			$primer_rssi = true;
 		}
 		else if(!$segundo_rssi){ //asignacion del segundo rssi
+			$rssi = 0;
 			if($rssi<$rssi_ch1){
 				$rssi_ch2 = $rssi_ch1;
 				$rssi_ch1 = $rssi;
 				$ch2 = $ch1;
 				$ch1 = $c;
+				echo "<br>";
+				echo "<p>CH1 = ".$ch1." RSSI = ".$rssi_ch1."</p>";
+				echo "<p>CH2 = ".$ch2." RSSI = ".$rssi_ch2."</p>";
+				echo "<br>";
 			}
 			else{
 				$ch2 = $c;
