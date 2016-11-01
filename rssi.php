@@ -19,16 +19,22 @@
 		if(!$primer_rssi){ //asignacion del primer rssi 
 			$ch1 = $c;
 			$rssi_ch1 = $rssi;
-			$rssi_ch2 = $rssi_ch1;
 			$primer_rssi = true;
 		}
 		else if(!$segundo_rssi){ //asignacion del segundo rssi
 			$rssi = 0;
 			if($rssi<$rssi_ch1){
-				$rssi_ch2 = $rssi_ch1;
-				$rssi_ch1 = $rssi;
-				$ch2 = $ch1;
-				$ch1 = $c;
+				if($ch1!=$c){
+					$ch2 = $ch1;
+					$ch1 = $c;
+					$rssi_ch2 = $rssi_ch1;
+					$rssi_ch1 = $rssi;
+				}
+				else{
+					$rssi_ch2 = $rssi_ch1;
+					$rssi_ch1 = $rssi;
+					$ch2 = $ch1+1;
+				}
 				echo "<br>";
 				echo "<p>CH1 = ".$ch1." RSSI = ".$rssi_ch1."</p>";
 				echo "<p>CH2 = ".$ch2." RSSI = ".$rssi_ch2."</p>";
@@ -41,15 +47,25 @@
 			$segundo_rssi = true;
 		}
 
-		if($rssi<$rssi_ch1){ //
-			$rssi_ch2 = $rssi_ch1;
-			$ch2 = $ch1;
-			$ch1 = $c;
-			$rssi_ch1 = $rssi;
-		}
-		else if($rssi<$rssi_ch2){
-			$rssi_ch2 = $rssi;
-			$ch2 = $c;
+		if($rssi<$rssi_ch2){ //
+			if($rssi<$rssi_ch1){
+				if($ch2!=$c){
+					$ch1 = $c;
+					$rssi_ch1 = $rssi;
+				}
+				else{
+					$ch2 = $ch1;
+					$rssi_ch2 = $rssi_ch1;
+					$ch1 = $c;
+					$rssi_ch1 = $rssi;
+				}
+			}
+			else{
+				if($ch1!=$c){
+					$ch2 = $c;
+					$rssi_ch2 = $rssi;
+				}
+			}
 		}
 		$c++;
 	}
